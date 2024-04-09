@@ -1,11 +1,13 @@
 package cn.edu.hbwe.gogo_server.controller;
 
+import cn.edu.hbwe.gogo_server.dto.Result;
+import cn.edu.hbwe.gogo_server.entity.User;
 import cn.edu.hbwe.gogo_server.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -18,21 +20,65 @@ public class UserController {
     // 引入日志记录器
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    // 注入 StringRedisTemplate
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     // 注入 UserService
     @Autowired
     private UserService userService;
 
-//    @GetMapping("/getTimetable")
-//    public ResponseEntity<Result> getTimetable(@RequestParam String eduUsername) {
-//        try {
-//            // 调用 UserService 的 getClassTable 方法，返回课表内容
-//            Result result = userService.getClassTable(eduUsername);
-//            return new ResponseEntity<>(result, HttpStatus.OK);
-//        } catch (Exception e) {
-//            logger.error("获取课表失败", e);
-//            return new ResponseEntity<>(new Result("获取课表失败", "2002", null), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    // 定义一个获取用户信息的请求
+    @PostMapping("/login")
+    public Result login(@RequestBody User object) {
+        // 调用UserService的方法获取用户信息
+        User user = userService.login(object.getUsername(), object.getPassword());
+        Result vo;
+        if (user != null) {
+            //登录成功
+            /*
+              1.生成一个token  字符串  比较长，随机
+              */
+//            String token = tokenUtils.createToken(object.getId() + "", object.getUsername());
+            //将token保存到redis
+//            userService.saveToken(token);
+            vo = new Result("登录成功", "1000", user);
+        } else {
+            vo = new Result("账号或者密码错误", "2000", null);
+        }
+        return vo;
+    }
 
+    @GetMapping("/checkUserName")
+    public Result checkUserName(@RequestParam String name) {
+        // 根据用户名检查是否存在，这里假设 username 不存在
+        User user = userService.findByUsername(name);
+        System.out.println(user);
+        Result vo;
+        if (user != null) {
+            //重复了
+            vo = new Result("用户名重复了", "1000", null);
+        } else {
+            //可以注册
+            vo = new Result("用户名不重复", "2000", null);
+        }
+        return vo;
+
+    }
+
+    //用户注册
+    @PostMapping("/register")
+    public Result Register(@RequestBody User object) {
+        boolean flag = userService.register(object.getUsername(), object.getPassword());
+        Result vo;
+        if (flag) {
+            //注册成功
+            vo = new Result("注册成功", "1000", null);
+        } else {
+            //注册成功
+            vo = new Result("用户信息注册失败", "2000", null);
+        }
+        return vo;
+    }
 
 }

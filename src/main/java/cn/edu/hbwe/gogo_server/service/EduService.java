@@ -2,6 +2,7 @@ package cn.edu.hbwe.gogo_server.service;
 
 import cn.edu.hbwe.gogo_server.dto.Result;
 import cn.edu.hbwe.gogo_server.entity.ClassUnit;
+import cn.edu.hbwe.gogo_server.entity.Profile;
 import cn.edu.hbwe.gogo_server.entity.Term;
 import cn.edu.hbwe.gogo_server.entity.YearAndSemestersPicker;
 import cn.edu.hbwe.gogo_server.exception.LoginException;
@@ -13,8 +14,8 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.net.SocketTimeoutException;
@@ -131,6 +132,75 @@ public class EduService {
             throw new LoginException("获取学期失败，请检查教务系统账号密码是否进行绑定");
         } catch (Exception e) {
             logger.error("获取学期失败", e);
+            throw new LoginException(e.getMessage());
+        }
+    }
+
+    public Profile getUserProfile(String eduUsername) {
+        try {
+            Objects.requireNonNull(eduUsername);
+
+            Map<String, String> cookies = eduSystemLoginUtil.getCookies(eduUsername);
+
+            Map<String, String> headers = createCommonHeaders();
+
+            Connection.Response response = HTTPUtil.sendGetRequest("/jwglxt/xsxxxggl/xsgrxxwh_cxXsgrxx.html?gnmkdm=N100801&layout=default&su=" + eduUsername, headers, cookies);
+
+            Document document = Jsoup.parse(response.body());
+
+            Elements ele = document.getElementsByClass("form-control-static");
+
+            return new Profile(
+                    ele.get(0).text(),
+                    ele.get(1).text(),
+                    ele.get(23).text(),
+                    ele.get(24).text(),
+                    ele.get(26).text(),
+                    ele.get(9).text()
+
+            );
+        } catch (SocketTimeoutException e) {
+            throw new LoginException("服务器响应时间过长，请稍后再试！！！");
+        } catch (NullPointerException e) {
+            throw new LoginException("获取个人信息失败，请检查教务系统账号密码是否进行绑定");
+        } catch (Exception e) {
+            logger.error("获取个人信息失败", e);
+            throw new LoginException(e.getMessage());
+        }
+    }
+
+    public String getGPAScores(String eduUsername) {
+        try {
+            Map<String, String> cookies = eduSystemLoginUtil.getCookies(eduUsername);
+            Map<String, String> headers = createCommonHeaders();
+            String gpa = "";
+            Connection.Response response = HTTPUtil.sendGetRequest("/jwglxt/xsxy/xsxyqk_cxXsxyqkIndex.html?gnmkdm=N105515&layout=default&su=" + eduUsername, headers, cookies);
+            String body = response.body();
+
+            Document doc = Jsoup.parse(body);
+            // 使用选择器定位所有红色的<font>元素
+            Elements elements = doc.select("font[style='color: red;']");
+
+            for (Element element : elements) {
+                String text = element.text().trim();
+                try {
+                    // 尝试将文本转换为浮点数
+                    Float.parseFloat(text);
+                    // 如果没有抛出异常，那么这个元素的文本就是GPA
+                    System.out.println("GPA: " + text);
+                    gpa = text;
+                    break;  // 找到GPA后就可以停止遍历
+                } catch (NumberFormatException e) {
+                    // 如果抛出异常，那么这个元素的文本不是GPA，继续遍历下一个元素
+                }
+            }
+            return gpa;
+        } catch (SocketTimeoutException e) {
+            throw new LoginException("服务器响应时间过长，请稍后再试！！！");
+        } catch (NullPointerException e) {
+            throw new LoginException("获取GPA失败，请检查教务系统账号密码是否进行绑定");
+        } catch (Exception e) {
+            logger.error("获取GPA失败", e);
             throw new LoginException(e.getMessage());
         }
     }
