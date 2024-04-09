@@ -1,31 +1,14 @@
 package cn.edu.hbwe.gogo_server.service;
 
 import cn.edu.hbwe.gogo_server.dao.UserDao;
-import cn.edu.hbwe.gogo_server.dto.Result;
-import cn.edu.hbwe.gogo_server.entity.ClassUnit;
-import cn.edu.hbwe.gogo_server.entity.Term;
 import cn.edu.hbwe.gogo_server.entity.User;
-import cn.edu.hbwe.gogo_server.entity.YearAndSemestersPicker;
-import cn.edu.hbwe.gogo_server.exception.LoginException;
-import cn.edu.hbwe.gogo_server.utils.EduSystemLoginUtil;
-import cn.edu.hbwe.gogo_server.utils.HTTPUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.net.SocketTimeoutException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Photite
@@ -36,6 +19,10 @@ public class UserService {
     // 注入 UserDao
     @Autowired
     private UserDao userDao;
+
+    // 注入 StringRedisTemplate
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     // 登录方法
     public User login(String username, String password) {
@@ -54,9 +41,16 @@ public class UserService {
         return i > 0;
     }
 
+    public User findByUsername(String username) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", username);
+        return userDao.selectOne(queryWrapper);
+    }
 
-
-
+    public void saveToken(String token) {
+        redisTemplate.boundValueOps("userToken").set(token);
+        redisTemplate.expire("userToken", 7, TimeUnit.DAYS);
+    }
 
 
 }

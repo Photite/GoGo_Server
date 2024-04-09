@@ -2,7 +2,6 @@ package cn.edu.hbwe.gogo_server.controller;
 
 import cn.edu.hbwe.gogo_server.dto.Result;
 import cn.edu.hbwe.gogo_server.service.EduService;
-import cn.edu.hbwe.gogo_server.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ public class EduController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/getTimetable")
-    public ResponseEntity<Result> getTimetable(@RequestParam String eduUsername) throws Exception {
+    public ResponseEntity<Result> getTimetable(@RequestParam String eduUsername) {
         logger.info("开始获取课表，用户名：{}", eduUsername);
         // 调用 UserService 的 getClassTable 方法，返回课表内容
         Result result = eduService.getClassTable(eduUsername);

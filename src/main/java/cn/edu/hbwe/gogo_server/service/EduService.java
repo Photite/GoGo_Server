@@ -1,6 +1,5 @@
 package cn.edu.hbwe.gogo_server.service;
 
-import cn.edu.hbwe.gogo_server.dao.UserDao;
 import cn.edu.hbwe.gogo_server.dto.Result;
 import cn.edu.hbwe.gogo_server.entity.ClassUnit;
 import cn.edu.hbwe.gogo_server.entity.Term;
@@ -32,10 +31,6 @@ public class EduService {
 
     // 引入Log4j2日志 日志记录器
     private static final Logger logger = LogManager.getLogger(EduSystemLoginUtil.class);
-
-    // 引入StringRedisTemplate类实例
-    @Autowired
-    private StringRedisTemplate redisTemplate;
 
     //创建EduSystemLoginUtil实例
     @Autowired
@@ -139,23 +134,6 @@ public class EduService {
             throw new LoginException(e.getMessage());
         }
     }
-
-//    private void getCookiesWithRetry(String eduUsername) {
-//        try {
-//            // 如果cookie过期，重新登录并获取新的cookie
-//            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-//            queryWrapper.eq("edu_username", eduUsername);
-//            User user = userDao.selectOne(queryWrapper);
-//            Map<String, String> newCookies = eduSystemLoginUtil.loginAndGetCookies(eduUsername, user.getEduPassword());
-//            // 将新的cookie存储到Redis中
-//            ObjectMapper mapper = new ObjectMapper();
-//            String newCookieJson = mapper.writeValueAsString(newCookies);
-//            redisTemplate.boundValueOps(eduUsername).set(newCookieJson);
-//            redisTemplate.expire(eduUsername, 7, TimeUnit.HOURS);
-//        } catch (Exception ex) {
-//            logger.error("重新获取Cookie失败", ex);
-//        }
-//    }
 
     private Map<String, String> createCommonHeaders() {
         Map<String, String> headers = new HashMap<>();
