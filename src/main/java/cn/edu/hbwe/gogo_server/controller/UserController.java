@@ -49,6 +49,7 @@ public class UserController {
         return vo;
     }
 
+    //检查用户名是否存在
     @GetMapping("/checkUserName")
     public Result checkUserName(@RequestParam String name) {
         // 根据用户名检查是否存在，这里假设 username 不存在
@@ -63,7 +64,6 @@ public class UserController {
             vo = new Result("用户名不重复", "2000", null);
         }
         return vo;
-
     }
 
     //用户注册

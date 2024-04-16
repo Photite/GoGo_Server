@@ -31,7 +31,8 @@ public class CookieRefreshAspect {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Before("execution(* cn.edu.hbwe.gogo_server.service.EduService.*(..)) && args(eduUsername,..)")
+    //    @Before("execution(* cn.edu.hbwe.gogo_server.service.EduService.*(..)) && args(eduUsername,..)")
+    @Before("execution(* cn.edu.hbwe.gogo_server.service.EduService.*(..)) && args(eduUsername,..) && !execution(* cn.edu.hbwe.gogo_server.service.EduService.eduLogin(..))")
     public void refreshCookie(String eduUsername) throws Exception {
         try {
             // 检查cookie是否有效，如果无效则刷新

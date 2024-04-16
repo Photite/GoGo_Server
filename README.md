@@ -10,7 +10,7 @@
 
 ## 📜 介绍
 
-这里是GoGo课程表的后端部分，使用 `SpringBoot3.2.4`,`SpringMVC`,`MybatisPlus`,`Mysql`,`Redis`,`Jsoup`
+这里是GoGo课程表的后端部分，使用 `SpringBoot3`,`SpringMVC`,`MybatisPlus`,`Mysql`,`Redis`,`Jsoup`
 等技术构建，主要实现了用户的登录注册，对教务系统信息的爬取，课程表的增删改查，课程表的导入导出，课程表的分享等功能。
 
 **Warning**
@@ -27,7 +27,6 @@
 2. 进入项目目录
    ```shell
    cd GoGo_Server
-   npm install
     ```
 
 ## 🚀 快速开始
