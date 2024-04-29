@@ -3,8 +3,6 @@ package cn.edu.hbwe.gogo_server.exception;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
-
 /**
  * @author Photite
  */

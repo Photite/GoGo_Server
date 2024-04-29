@@ -124,6 +124,6 @@ public class ClassUnit {
         //单周
         SINGULAR,
         //双周
-        EVEN;
+        EVEN
     }
 }

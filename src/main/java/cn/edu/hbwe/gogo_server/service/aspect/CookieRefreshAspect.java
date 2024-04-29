@@ -32,7 +32,11 @@ public class CookieRefreshAspect {
     private StringRedisTemplate redisTemplate;
 
     //    @Before("execution(* cn.edu.hbwe.gogo_server.service.EduService.*(..)) && args(eduUsername,..)")
-    @Before("execution(* cn.edu.hbwe.gogo_server.service.EduService.*(..)) && args(eduUsername,..) && !execution(* cn.edu.hbwe.gogo_server.service.EduService.eduLogin(..))")
+//    @Before("execution(* cn.edu.hbwe.gogo_server.service.EduService.*(..)) && args(eduUsername,..) && !execution(* cn.edu.hbwe.gogo_server.service.EduService.eduLogin(..))")
+    @Before("execution(* cn.edu.hbwe.gogo_server.service.UserProfileService.*(..)) && args(eduUsername,..) || " +
+            "execution(* cn.edu.hbwe.gogo_server.service.ClassTableService.*(..)) && args(eduUsername,..) || " +
+            "execution(* cn.edu.hbwe.gogo_server.service.ExamListService.*(..)) && args(eduUsername,..) || " +
+            "execution(* cn.edu.hbwe.gogo_server.service.SchoolCalenderService.*(..)) && args(eduUsername,..)")
     public void refreshCookie(String eduUsername) throws Exception {
         try {
             // 检查cookie是否有效，如果无效则刷新
