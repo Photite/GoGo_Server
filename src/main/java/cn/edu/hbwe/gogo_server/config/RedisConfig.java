@@ -8,6 +8,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis配置类
+ *
  * @author Photite
  */
 @Configuration
@@ -20,12 +21,12 @@ public class RedisConfig {
 
         //默认的Key序列化器为：JdkSerializationRedisSerializer
         redisTemplate.setKeySerializer(new StringRedisSerializer());
+
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
 
         redisTemplate.setConnectionFactory(connectionFactory);
 
         return redisTemplate;
     }
-
 
 }

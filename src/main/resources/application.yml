@@ -30,6 +30,22 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: false
 
+#教务系统地址
 edu-system:
   url: https://jwxt.hbwe.edu.cn
 
+#微信小程序
+wx:
+  #微信小程序的 appId
+  appId: wx6b7542e3a25d95c6
+  #微信小程序的 appSecret
+  appSecret: 小程序的appSecret
+  #模板 ID
+  templateId: 小程序订阅消息的模板id
+
+# JWT配置
+jwt:
+  header: "Authorization" #token返回头部
+  tokenPrefix: "Bearer " #token前缀
+  secret: "chuangzao101" #密钥
+  expireTime: 3600000 #token有效时间 3600000毫秒 ==> 60分钟

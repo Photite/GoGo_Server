@@ -29,6 +29,12 @@
         <!--            <scope>runtime</scope>-->
         <!--            <optional>true</optional>-->
         <!--        </dependency>-->
+        <!-- jwt支持 -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.19.2</version>
+        </dependency>
         <!-- 在SpringBoot3.2.4中引入aspectj-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -34,6 +34,7 @@ public class SchoolCalenderService {
     public Result getSchoolCalender(String eduUsername) {
         try {
             Map<String, String> cookies = eduSystemLoginUtil.getCookies(eduUsername);
+
             Map<String, String> headers = HTTPUtil.createCommonHeaders();
 
             Connection.Response response = HTTPUtil.sendGetRequest("/jwglxt/xtgl/index_cxAreaSix.html?localeKey=zh_CN&gnmkdm=index&su=" + eduUsername, headers, cookies);
@@ -56,8 +57,7 @@ public class SchoolCalenderService {
             starts = se[1].split("-");
             LocalDate end = LocalDate.of(Integer.parseInt(starts[0]), Integer.parseInt(starts[1]), Integer.parseInt(starts[2]));
 
-            Term term1 = new Term(year, sem);
-            return new Result("获取学期起止时间成功", "1000", new SchoolCalender(start, end, term1));
+            return new Result("获取学期起止时间成功", "1000", new SchoolCalender(start, end, year, sem));
 
         } catch (SocketTimeoutException e) {
             throw new LoginException("服务器响应时间过长，请稍后再试！！！");
