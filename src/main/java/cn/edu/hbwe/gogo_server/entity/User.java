@@ -19,8 +19,8 @@ public class User {
     private Integer id;
     private String username;
     private String password;
-    @TableField("wechat_id")
-    private String wechatId;
+    @TableField("open_id")
+    private String openId;
     @TableField("edu_username")
     private String eduUsername;
     @TableField("edu_password")
@@ -31,4 +31,11 @@ public class User {
         this.password = password;
     }
 
+    public User(String username, String password, String openId, String eduUsername, String eduPassword) {
+        this.username = username;
+        this.password = password;
+        this.openId = openId;
+        this.eduUsername = eduUsername;
+        this.eduPassword = eduPassword;
+    }
 }

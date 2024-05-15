@@ -36,10 +36,10 @@ edu-system:
 
 #微信小程序
 wx:
-  #微信小程序的 appId
-  appId: wx6b7542e3a25d95c6
+  #微信小程序的 AppId
+  AppId: wx6b7542e3a25d95c6
   #微信小程序的 appSecret
-  appSecret: 小程序的appSecret
+  appSecret: e9f262ff56109a0ea0bb108e884156e0
   #模板 ID
   templateId: 小程序订阅消息的模板id
 

@@ -43,9 +43,21 @@ public class HTTPUtil {
                 .timeout(30000);
     }
 
+//    public static String compile(Object... p) {
+//        StringBuilder builder = new StringBuilder(eduSystemUrl);
+//        Arrays.stream(p).forEach(builder::append);
+//        return builder.toString();
+//    }
+
     public static String compile(Object... p) {
-        StringBuilder builder = new StringBuilder(eduSystemUrl);
-        Arrays.stream(p).forEach(builder::append);
+        StringBuilder builder = new StringBuilder();
+        Arrays.stream(p).forEach(part -> {
+            String strPart = part.toString();
+            if (strPart.startsWith("/")) {
+                builder.append(eduSystemUrl);
+            }
+            builder.append(strPart);
+        });
         return builder.toString();
     }
 
@@ -83,11 +95,11 @@ public class HTTPUtil {
             SSLContext context = SSLContext.getInstance("TLS");
             context.init(null, new X509TrustManager[]{new X509TrustManager() {
                 @Override
-                public void checkClientTrusted(X509Certificate[] chain, String authType){
+                public void checkClientTrusted(X509Certificate[] chain, String authType) {
                 }
 
                 @Override
-                public void checkServerTrusted(X509Certificate[] chain, String authType){
+                public void checkServerTrusted(X509Certificate[] chain, String authType) {
                 }
 
                 @Override
@@ -100,4 +112,6 @@ public class HTTPUtil {
             logger.severe("无法初始化 SSL 上下文：" + e.getMessage());
         }
     }
+
+
 }
