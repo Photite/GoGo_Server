@@ -48,7 +48,7 @@ public class EduService {
             String newCookieJson = mapper.writeValueAsString(cookies);
             // 将新的cookie存储到Redis中
             redisTemplate.boundValueOps(eduUsername).set(newCookieJson);
-            redisTemplate.expire(eduUsername, 7, TimeUnit.HOURS);
+            redisTemplate.expire(eduUsername, 24, TimeUnit.HOURS);
             return new Result("登录成功", "1000", null);
         } catch (SocketTimeoutException e) {
             throw new LoginException("服务器响应时间过长，请稍后再试！！！");
