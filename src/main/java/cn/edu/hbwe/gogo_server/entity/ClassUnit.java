@@ -130,7 +130,7 @@ public class ClassUnit {
 //        this.weekAsMinMax = rtn;
     }
 
-    public ClassUnit(int lessonStart, String name, String teacher, String room, int lessonEnd, String lessonType, String code, int dayInWeek, int weekStart, int weekEnd, String weekType, String weekEachLesson, String eduUsername, String openid, String classInfo) {
+    public ClassUnit(int id, int lessonStart, String name, String teacher, String room, int lessonEnd, String lessonType, String code, int dayInWeek, int weekStart, int weekEnd, String weekType, String weekEachLesson, String eduUsername, String openid, String classInfo) {
         this.lessonStart = lessonStart;
         this.name = name;
         this.teacher = teacher;
@@ -146,6 +146,7 @@ public class ClassUnit {
         this.eduUsername = eduUsername;
         this.openid = openid;
         this.classInfo = classInfo;
+        this.id = id;
     }
 
     @Getter

@@ -29,6 +29,11 @@
         <!--            <scope>runtime</scope>-->
         <!--            <optional>true</optional>-->
         <!--        </dependency>-->
+        <!-- Spring Boot Starter for RabbitMQ，用于在 Spring Boot 应用中使用 RabbitMQ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <!-- jwt支持 -->
         <dependency>
             <groupId>com.auth0</groupId>

@@ -15,4 +15,8 @@ public class WeChatLogin {
      */
     private String openId;
 
+    private String eduUsername;
+
+    private String eduPassword;
+
 }

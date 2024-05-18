@@ -125,6 +125,7 @@ public class ClassTableService {
         List<Map<String, Object>> records = classUnitDao.selectMaps(queryWrapper);
         for (Map<String, Object> record : records) {
             ClassUnit classUnit = new ClassUnit(
+                    (int) record.get("id"),
                     (int) record.get("lessonStart"),
                     (String) record.get("name"),
                     (String) record.get("teacher"),

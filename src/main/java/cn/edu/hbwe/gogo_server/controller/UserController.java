@@ -60,7 +60,7 @@ public class UserController {
     public ResponseEntity<Result> loginCheck(@RequestBody WeChatLogin weChatLogin, HttpServletResponse response) throws Exception {
         // 检查登录
         System.out.println(weChatLogin.getCode());
-        Map<String, Object> resultMap = userService.checkLogin(weChatLogin.getCode());
+        Map<String, Object> resultMap = userService.Login(weChatLogin.getCode(), weChatLogin.getEduUsername(), weChatLogin.getEduPassword());
         // resultMap大于1为通过，业务层判断正确后返回用户信息和token，所以应该size为2才正确。
         if (resultMap.size() > 1) {
             logger.info("创建的token为=>{}", resultMap.get("token"));
@@ -105,5 +105,11 @@ public class UserController {
         return vo;
     }
 
+    // 生成一个测试方法
+    @GetMapping("/test")
+    public String test() {
+        userService.testSendSubscribeMessage();
+        return "Hello World!";
+    }
 
 }

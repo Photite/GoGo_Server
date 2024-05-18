@@ -19,6 +19,8 @@ public class User {
     private Integer id;
     private String username;
     private String password;
+    //头像
+//    private String avatar;
     @TableField("open_id")
     private String openId;
     @TableField("edu_username")

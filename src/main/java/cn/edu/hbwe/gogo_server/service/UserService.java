@@ -6,8 +6,8 @@ import cn.edu.hbwe.gogo_server.entity.WeChatSession;
 import cn.edu.hbwe.gogo_server.utils.EduSystemLoginUtil;
 import cn.edu.hbwe.gogo_server.utils.HTTPUtil;
 import cn.edu.hbwe.gogo_server.utils.JWTUtils;
+import cn.edu.hbwe.gogo_server.utils.WXUtil;
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
@@ -16,16 +16,11 @@ import org.jsoup.Connection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Photite
@@ -41,6 +36,9 @@ public class UserService {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Autowired
+    private WXUtil wxUtil;
+
     // 引入Log4j2日志 日志记录器
     private static final Logger logger = LogManager.getLogger(EduSystemLoginUtil.class);
 
@@ -54,15 +52,15 @@ public class UserService {
     Map<String, Object> map = new HashMap<>();
 
 
-    // 登录方法
-    public User login(String username, String password) {
-        String pwd = DigestUtils.md5Hex(password + username);
-        // 使用QueryWrapper构建查询条件
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", username).eq("password", pwd);
-        // 调用UserDao的selectOne方法来进行用户登录验证
-        return userDao.selectOne(queryWrapper);
-    }
+//    // 登录方法
+//    public User login(String username, String password) {
+//        String pwd = DigestUtils.md5Hex(password + username);
+//        // 使用QueryWrapper构建查询条件
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("username", username).eq("password", pwd);
+//        // 调用UserDao的selectOne方法来进行用户登录验证
+//        return userDao.selectOne(queryWrapper);
+//    }
 
     // 注册方法
     public boolean register(String username, String password) {
@@ -77,13 +75,7 @@ public class UserService {
         return userDao.selectOne(queryWrapper);
     }
 
-    public void saveToken(String token) {
-        redisTemplate.boundValueOps("userToken").set(token);
-        redisTemplate.expire("userToken", 7, TimeUnit.DAYS);
-    }
-
-
-    public Map<String, Object> checkLogin(String code) throws Exception {
+    public Map<String, Object> Login(String code, String eduUsername, String eduPassword) throws Exception {
         // 根据传入code，调用微信服务器，获取唯一openid
         // 微信服务器接口地址
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid + "&secret=" + appsecret
@@ -129,7 +121,7 @@ public class UserService {
             // 不存在，加入数据表
             if (user == null) {
                 // 填充初始信息
-                User tempUser = new User("", "", openid, "", "");
+                User tempUser = new User("", "", openid, eduUsername, eduPassword);
                 // 加入数据表
                 userDao.insert(tempUser);
                 // 加入map返回
@@ -148,5 +140,26 @@ public class UserService {
         }
     }
 
+
+    public void testSendSubscribeMessage() {
+        String openId = "oGf3_7KIRarQmpOebUoQGBs6rA7k";
+        String templateId = "vOJxRJYk2eSsX2L4DcVqunPtPBHVakraf9x1tXO2Zpo";
+        String page = "pages/index/main";
+
+        Map<String, Map<String, String>> data01 = new HashMap<>();
+        Map<String, String> thing1 = new HashMap<>();
+        thing1.put("value", "计算机组成原理第一节课");
+        data01.put("thing1", thing1);
+
+        Map<String, String> thing2 = new HashMap<>();
+        thing2.put("value", "基础课程");
+        data01.put("thing2", thing2);
+
+        Map<String, String> time3 = new HashMap<>();
+        time3.put("value", "2024年1月2日 09:56");
+        data01.put("time3", time3);
+
+        wxUtil.sendSubscribeMessage(openId, templateId, page, data01);
+    }
 
 }
