@@ -5,6 +5,7 @@ import cn.edu.hbwe.gogo_server.entity.User;
 import cn.edu.hbwe.gogo_server.entity.WeChatLogin;
 import cn.edu.hbwe.gogo_server.service.UserService;
 import cn.edu.hbwe.gogo_server.utils.JWTUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +108,7 @@ public class UserController {
 
     // 生成一个测试方法
     @GetMapping("/test")
-    public String test() {
+    public String test() throws JsonProcessingException {
         userService.testSendSubscribeMessage();
         return "Hello World!";
     }

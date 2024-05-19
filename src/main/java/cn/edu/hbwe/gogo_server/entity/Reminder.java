@@ -2,6 +2,7 @@ package cn.edu.hbwe.gogo_server.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Setter
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reminder {
+public class Reminder implements Serializable {
     private String id;
     private String openId;
     private String content;

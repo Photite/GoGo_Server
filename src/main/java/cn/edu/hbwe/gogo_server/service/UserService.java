@@ -9,6 +9,8 @@ import cn.edu.hbwe.gogo_server.utils.JWTUtils;
 import cn.edu.hbwe.gogo_server.utils.WXUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -141,10 +143,11 @@ public class UserService {
     }
 
 
-    public void testSendSubscribeMessage() {
+    public void testSendSubscribeMessage() throws JsonProcessingException {
         String openId = "oGf3_7KIRarQmpOebUoQGBs6rA7k";
         String templateId = "vOJxRJYk2eSsX2L4DcVqunPtPBHVakraf9x1tXO2Zpo";
         String page = "pages/index/main";
+//        ObjectMapper objectMapper = new ObjectMapper();
 
         Map<String, Map<String, String>> data01 = new HashMap<>();
         Map<String, String> thing1 = new HashMap<>();
@@ -158,6 +161,9 @@ public class UserService {
         Map<String, String> time3 = new HashMap<>();
         time3.put("value", "2024年1月2日 09:56");
         data01.put("time3", time3);
+
+//        String jsonString = objectMapper.writeValueAsString(data01);
+//        System.out.println(jsonString);
 
         wxUtil.sendSubscribeMessage(openId, templateId, page, data01);
     }
