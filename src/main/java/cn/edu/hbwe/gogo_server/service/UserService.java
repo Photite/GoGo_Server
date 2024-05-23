@@ -53,17 +53,6 @@ public class UserService {
     // 用于存储用户信息和token
     Map<String, Object> map = new HashMap<>();
 
-
-//    // 登录方法
-//    public User login(String username, String password) {
-//        String pwd = DigestUtils.md5Hex(password + username);
-//        // 使用QueryWrapper构建查询条件
-//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("username", username).eq("password", pwd);
-//        // 调用UserDao的selectOne方法来进行用户登录验证
-//        return userDao.selectOne(queryWrapper);
-//    }
-
     // 注册方法
     public boolean register(String username, String password) {
         String pwd = DigestUtils.md5Hex(password + username);
@@ -75,6 +64,22 @@ public class UserService {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("name", username);
         return userDao.selectOne(queryWrapper);
+    }
+
+    // 根据openid查询用户eduUsername
+    public String findEduUsernameByOpenid(String openid) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("open_id", openid);
+        User user = userDao.selectOne(queryWrapper);
+        return user.getEduUsername();
+    }
+
+    // 根据eduUsername查询openid
+    public String findOpenidByEduUsername(String eduUsername) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("edu_username", eduUsername);
+        User user = userDao.selectOne(queryWrapper);
+        return user.getOpenId();
     }
 
     public Map<String, Object> Login(String code, String eduUsername, String eduPassword) throws Exception {
@@ -143,29 +148,29 @@ public class UserService {
     }
 
 
-    public void testSendSubscribeMessage() throws JsonProcessingException {
-        String openId = "oGf3_7KIRarQmpOebUoQGBs6rA7k";
-        String templateId = "vOJxRJYk2eSsX2L4DcVqunPtPBHVakraf9x1tXO2Zpo";
-        String page = "pages/index/main";
-//        ObjectMapper objectMapper = new ObjectMapper();
-
-        Map<String, Map<String, String>> data01 = new HashMap<>();
-        Map<String, String> thing1 = new HashMap<>();
-        thing1.put("value", "计算机组成原理第一节课");
-        data01.put("thing1", thing1);
-
-        Map<String, String> thing2 = new HashMap<>();
-        thing2.put("value", "基础课程");
-        data01.put("thing2", thing2);
-
-        Map<String, String> time3 = new HashMap<>();
-        time3.put("value", "2024年1月2日 09:56");
-        data01.put("time3", time3);
-
-//        String jsonString = objectMapper.writeValueAsString(data01);
-//        System.out.println(jsonString);
-
-        wxUtil.sendSubscribeMessage(openId, templateId, page, data01);
-    }
+//    public void testSendSubscribeMessage() throws JsonProcessingException {
+//        String openId = "oGf3_7KIRarQmpOebUoQGBs6rA7k";
+//        String templateId = "vOJxRJYk2eSsX2L4DcVqunPtPBHVakraf9x1tXO2Zpo";
+//        String page = "pages/index/main";
+////        ObjectMapper objectMapper = new ObjectMapper();
+//
+//        Map<String, Map<String, String>> data01 = new HashMap<>();
+//        Map<String, String> thing1 = new HashMap<>();
+//        thing1.put("value", "计算机组成原理第一节课");
+//        data01.put("thing1", thing1);
+//
+//        Map<String, String> thing2 = new HashMap<>();
+//        thing2.put("value", "基础课程");
+//        data01.put("thing2", thing2);
+//
+//        Map<String, String> time3 = new HashMap<>();
+//        time3.put("value", "2024年1月2日 09:56");
+//        data01.put("time3", time3);
+//
+////        String jsonString = objectMapper.writeValueAsString(data01);
+////        System.out.println(jsonString);
+//
+//        wxUtil.sendSubscribeMessage(openId, templateId, page, data01);
+//    }
 
 }

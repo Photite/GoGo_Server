@@ -107,10 +107,10 @@ public class UserController {
     }
 
     // 生成一个测试方法
-    @GetMapping("/test")
-    public String test() throws JsonProcessingException {
-        userService.testSendSubscribeMessage();
-        return "Hello World!";
-    }
+//    @GetMapping("/test")
+//    public String test() throws JsonProcessingException {
+//        userService.testSendSubscribeMessage();
+//        return "Hello World!";
+//    }
 
 }
