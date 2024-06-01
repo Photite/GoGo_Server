@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-
 /**
  * @author Photite
  */
@@ -105,12 +104,5 @@ public class UserController {
         }
         return vo;
     }
-
-    // 生成一个测试方法
-//    @GetMapping("/test")
-//    public String test() throws JsonProcessingException {
-//        userService.testSendSubscribeMessage();
-//        return "Hello World!";
-//    }
 
 }

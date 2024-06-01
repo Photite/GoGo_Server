@@ -91,14 +91,10 @@ public class EduSystemLoginUtil {
 
         System.out.println("stuNum: " + eduUsername + "password: " + eduPassword);
         // 调用init方法，并使用LoginAuthorization对象存储数据
-        System.out.println("登录请求已发送1");
         init(auth);
-        System.out.println("登录请求已发送2");
         // 加密密码并使用LoginAuthorization对象中的公钥信息
         eduPassword = RSAEncoder.encrypt(eduPassword, B64.b64tohex(auth.getPublicKey().get("modulus")), B64.b64tohex(auth.getPublicKey().get("exponent")));
-        System.out.println("登录请求已发送3");
         eduPassword = B64.hex2b64(eduPassword);
-        System.out.println("登录请求已发送4");
         // 创建请求头和请求数据
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -171,7 +167,7 @@ public class EduSystemLoginUtil {
         }
     }
 
-    // 修改获取csrftoken和Cookies的方法
+    // 获取csrftoken的方法
     private void getCsrftoken(LoginAuthorization auth) {
         try {
             System.out.println("获取csrftoken");

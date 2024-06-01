@@ -42,11 +42,6 @@ public class ReminderService {
             String openid = reminder.getOpenId();
             reminder.setOpenId(userService.findOpenidByEduUsername(openid));
 
-//            ZonedDateTime dateTime = ZonedDateTime.parse(reminder.getReminderTime() + " Asia/Shanghai");
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String formattedDateTime = dateTime.format(formatter);
-
-
             // 将 Reminder 对象转换为 JSON 字符串
             String reminderJson = objectMapper.writeValueAsString(reminder);
 

@@ -18,18 +18,6 @@ public class ReminderController {
     @PostMapping("/createReminder")
     public ResponseEntity<Result> createReminder(@RequestBody Reminder reminder) {
         return new ResponseEntity<Result>(reminderService.sendReminder(reminder), HttpStatus.OK);
-
     }
-
-//    @PostMapping("/createReminder")
-//    public void createReminder(@RequestBody Reminder reminder) {
-//        reminderService.sendReminder(reminder);
-//    }
-
-//    @GetMapping("/test")
-//    public ResponseEntity<String> testSendMessage() throws JsonProcessingException {
-//        reminderService.testSendDelayedMessage();
-//        return new ResponseEntity<>("Test message sent", HttpStatus.OK);
-//    }
 
 }
