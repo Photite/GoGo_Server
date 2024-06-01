@@ -44,6 +44,9 @@ public class ExamResult {
     @JSONField(name = "sfxwkc")
     private boolean degreeProgram;
 
+    @JSONField(name = "edu_username")
+    private String eduUsername;
+
     public Status getStatus() {
         if (Double.compare(Double.parseDouble(absoluteScore), 60) == -1) {
             return Status.FAIL;

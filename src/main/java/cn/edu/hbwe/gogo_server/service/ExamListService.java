@@ -66,7 +66,6 @@ public class ExamListService {
 
             String body = response.body();
 
-
             String items = com.alibaba.fastjson2.JSON.parseObject(body).getJSONArray("items").toString();
 
             List<JSONObject> jsonObjects = com.alibaba.fastjson2.JSON.parseArray(items, com.alibaba.fastjson2.JSONObject.class);
