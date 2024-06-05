@@ -3,7 +3,6 @@ package cn.edu.hbwe.gogo_server.service;
 import cn.edu.hbwe.gogo_server.dao.ActivityDao;
 import cn.edu.hbwe.gogo_server.dto.Result;
 import cn.edu.hbwe.gogo_server.entity.Activity;
-import cn.edu.hbwe.gogo_server.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

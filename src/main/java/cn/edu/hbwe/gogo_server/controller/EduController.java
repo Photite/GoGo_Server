@@ -1,6 +1,7 @@
 package cn.edu.hbwe.gogo_server.controller;
 
 import cn.edu.hbwe.gogo_server.dto.Result;
+import cn.edu.hbwe.gogo_server.entity.ExamResult;
 import cn.edu.hbwe.gogo_server.entity.User;
 import cn.edu.hbwe.gogo_server.service.*;
 import org.slf4j.Logger;
@@ -32,7 +33,7 @@ public class EduController {
 
     // 注入 ExamListService
     @Autowired
-    private ExamListService examListService;
+    private ExamResultListService examResultListService;
 
     // 注入 SchoolCalenderService
     @Autowired
@@ -73,12 +74,12 @@ public class EduController {
     // 定义一个获取考试分数的请求
     @GetMapping("/getExamGrade")
     public ResponseEntity<Result> getExamGrade(@RequestParam String eduUsername) {
-        return new ResponseEntity<>(examListService.getExamList(eduUsername), HttpStatus.OK);
+        return new ResponseEntity<>(examResultListService.getExamResultList(eduUsername), HttpStatus.OK);
     }
 
-    // 定义一个获取所有考试分数的请求
-    @GetMapping("/getAllExamGrade")
-    public ResponseEntity<Result> getAllExamGrade(@RequestParam String eduUsername) {
-        return new ResponseEntity<>(examListService.getAllExamList(eduUsername), HttpStatus.OK);
-    }
+//    // 定义一个获取所有考试分数的请求
+//    @GetMapping("/getAllExamGrade")
+//    public ResponseEntity<Result> getAllExamGrade(@RequestParam String eduUsername) {
+//        return new ResponseEntity<>(examListService.getAllExamList(eduUsername), HttpStatus.OK);
+//    }
 }

@@ -1,14 +1,21 @@
 package cn.edu.hbwe.gogo_server.entity;
 
 import com.alibaba.fastjson2.annotation.JSONField;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Photite
  */
+@Setter
+@Getter
 @Data
 public class ExamResult {
-
+    @TableId(type = IdType.AUTO)
+    private Integer id;
     @JSONField(name = "xnm")
     private String year;
     @JSONField(name = "xqm")
