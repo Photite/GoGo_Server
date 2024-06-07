@@ -77,6 +77,14 @@ public class EduController {
         return new ResponseEntity<>(examResultListService.getExamResultList(eduUsername), HttpStatus.OK);
     }
 
+    // 定义一个获取所有考试分数的请求
+    @GetMapping("/getAllExamGrade")
+    public ResponseEntity<Result> getAllExamGrade(@RequestParam String eduUsername) {
+        return new ResponseEntity<>(examResultListService.getAllExamResultList(eduUsername), HttpStatus.OK);
+    }
+
+    //
+
 //    // 定义一个获取所有考试分数的请求
 //    @GetMapping("/getAllExamGrade")
 //    public ResponseEntity<Result> getAllExamGrade(@RequestParam String eduUsername) {

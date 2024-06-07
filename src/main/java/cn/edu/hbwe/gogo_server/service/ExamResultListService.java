@@ -276,6 +276,9 @@ public class ExamResultListService {
         }
     }
 
+    
+
+
 
     //    // 定义一个获取考试成绩的方法，接收学号，返回Result
 //    public Result getExamList(String eduUsername) {
